@@ -19,13 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\nagisa\dsal\iterator\detail\base.h" />
+    <ClInclude Include="include\nagisa\dsal\iterator\detail\custom_point.h" />
+    <ClInclude Include="include\nagisa\dsal\iterator\detail\optional_type.h" />
     <ClInclude Include="include\nagisa\dsal\iterator\detail\deduce.h" />
     <ClInclude Include="include\nagisa\dsal\iterator\detail\environment.h" />
     <ClInclude Include="include\nagisa\dsal\iterator\detail\interface.h" />
+    <ClInclude Include="include\nagisa\dsal\iterator\detail\adaptor.h" />
+    <ClInclude Include="include\nagisa\dsal\iterator\detail\trait.h" />
     <ClInclude Include="include\nagisa\dsal\iterator\environment.h" />
     <ClInclude Include="include\nagisa\dsal\iterator\export.h" />
     <ClInclude Include="include\nagisa\dsal\iterator\iterator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="test\bidirectional_iter.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
