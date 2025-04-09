@@ -27,12 +27,6 @@
     <ClInclude Include="include\nagisa\dsal\iterator\detail\environment.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="include\nagisa\dsal\iterator\detail\deduce.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nagisa\dsal\iterator\detail\optional_type.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="include\nagisa\dsal\iterator\detail\interface.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -48,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test\bidirectional_iter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test\adaptor.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

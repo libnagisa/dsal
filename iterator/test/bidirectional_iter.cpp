@@ -12,9 +12,8 @@
 #include <list>
 #include <type_traits>
 
-
 struct basic_bidirectional_iter_impl
-	: ::nagisa::dsal::iterator_interface<basic_bidirectional_iter_impl, ::std::bidirectional_iterator_tag, void, ::std::ptrdiff_t>
+	: ::nagisa::dsal::iterator_interface<basic_bidirectional_iter_impl, ::std::bidirectional_iterator_tag, ::std::ptrdiff_t>
 {
 	using self_type = basic_bidirectional_iter_impl;
 
@@ -46,10 +45,9 @@ static_assert(::std::same_as<int, ::nagisa::dsal::details::iter_value_t<basic_bi
 static_assert(::std::bidirectional_iterator<basic_bidirectional_iter>);
 static_assert(::std::same_as<int, ::std::iter_value_t<basic_bidirectional_iter>>);
 
-
 template<typename ValueType>
 struct bidirectional_iter_impl
-	: ::nagisa::dsal::iterator_interface<bidirectional_iter_impl<ValueType>,std::bidirectional_iterator_tag,ValueType, ::std::ptrdiff_t>
+	: ::nagisa::dsal::iterator_interface<bidirectional_iter_impl<ValueType>,std::bidirectional_iterator_tag, ::std::ptrdiff_t, ValueType>
 {
 	using self_type = bidirectional_iter_impl;
 	bidirectional_iter_impl() : it_(nullptr) {}

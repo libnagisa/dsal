@@ -7,12 +7,43 @@
 
 NAGISA_BUILD_LIB_DETAIL_BEGIN
 
+/// \brief Iterator adapter, which provides an adapter to combine other methods of passing iterators
+/// \tparam Iterator The type of the underlying iterator.
+/// \note The functions assembled by the adapter depend on those provided by the Iterator. The dependencies are as follows
+///		(iterator_adaptor a, Iterator i)
+///		*a			-> *i
+///		a += n		-> (i += n) | (i -= -n)
+///		a -= n		-> (i -= n) | (a += -n)
+///		++a			-> ++i | (a += 1)
+///		a++			-> i++ | (++a, a = a)
+///		--a			-> --i | (a += -1)
+///		a--			-> i-- | (--a, a = a)
+///		a + n		-> (i + n) | (a += n, a = a)
+///		n + a		-> (n + i) | (a + n)
+///		a[n]		-> (i[n]) | (a + n, *a)
+///		a - n		-> (i - n) | (a + -n)
+///		a - a		-> (i - i)
+///		a <=> a		-> (i <=> i) | (a - a)
+///		a == a		-> (i == i) | (a <=> a)
+///		
+///		concept						operations
+///		input_or_output_iterator	movable, *i,	++i, difference_type
+///		output_iterator				movable, *i = e,++i, difference_type
+///		input_iterator				movable, *i,	++i, difference_type
+///		forward_iterator			regular, *i,	++i, difference_type, i == i
+///		bidirectional_iterator		regular, *i,	++i, difference_type, i == i, --i
+///		random_access_iterator		regular, *i, i += n, i - i
+///		contiguous_iterator			regular, *i, i += n, i - i
+///	\TODO:
+///		iter_swap
+///		iter_move
 template<class Iterator>
+	requires ::std::is_object_v<Iterator>
 struct iterator_adaptor final : iterator_interface<
 	iterator_adaptor<Iterator>
 	, iter_concept_t<Iterator>
-	, iter_value_t<Iterator>
 	, iter_difference_t<Iterator>
+	, iter_value_t<Iterator>
 >{
 private:
 	using self_type = iterator_adaptor;
@@ -34,7 +65,9 @@ public:
 	{
 		if constexpr (constexpr iter_cp::result result = iter_cp::dereference<iterator_type>();
 			result.category == iter_cp::category::proxy)
+		{
 			return *_iter;
+		}
 	}
 	constexpr decltype(auto) operator+=(iter_difference_t<iterator_type> n) noexcept(iter_cp::plus_eq<iterator_type>().is_nothrow)
 		requires (iter_cp::plus_eq<iterator_type>().category != iter_cp::category::none)
