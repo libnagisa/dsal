@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "./trait.h"
 #include "./custom_point.h"
@@ -27,11 +27,11 @@ NAGISA_BUILD_LIB_DETAIL_BEGIN
 ///		a == a		-> (i == i) | (a <=> a)
 ///		
 ///		concept						operations
-///		input_or_output_iterator	movable, *i,	++i, difference_type
-///		output_iterator				movable, *i = e,++i, difference_type
-///		input_iterator				movable, *i,	++i, difference_type
-///		forward_iterator			regular, *i,	++i, difference_type, i == i
-///		bidirectional_iterator		regular, *i,	++i, difference_type, i == i, --i
+///		input_or_output_iterator	movable, *i, ++i, difference_type
+///		output_iterator				movable, *i, ++i, difference_type
+///		input_iterator				movable, *i, ++i, difference_type
+///		forward_iterator			regular, *i, ++i, difference_type, i == i
+///		bidirectional_iterator		regular, *i, ++i, difference_type, i == i, --i
 ///		random_access_iterator		regular, *i, i += n, i - i
 ///		contiguous_iterator			regular, *i, i += n, i - i
 ///	\TODO:
@@ -60,7 +60,16 @@ public:
 	{
 	}
 
-	constexpr decltype(auto) operator*() const noexcept(iter_cp::dereference<iterator_type>().is_nothrow)
+	constexpr decltype(auto) operator*() const noexcept(iter_cp::dereference<iterator_type const>().is_nothrow)
+		requires (iter_cp::dereference<iterator_type const>().category != iter_cp::category::none)
+	{
+		if constexpr (constexpr iter_cp::result result = iter_cp::dereference<iterator_type const>();
+			result.category == iter_cp::category::proxy)
+		{
+			return *_iter;
+		}
+	}
+	constexpr decltype(auto) operator*() noexcept(iter_cp::dereference<iterator_type>().is_nothrow)
 		requires (iter_cp::dereference<iterator_type>().category != iter_cp::category::none)
 	{
 		if constexpr (constexpr iter_cp::result result = iter_cp::dereference<iterator_type>();
