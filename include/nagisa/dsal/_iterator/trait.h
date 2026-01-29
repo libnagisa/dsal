@@ -8,7 +8,7 @@ NAGISA_BUILD_LIB_DETAIL_BEGIN
 template<class T>
 concept primary_iterator_trait =
 #if defined(__GLIBCXX__)
-::std::__primary_traits_iter<T>
+::std::__detail::__primary_traits_iter<T>
 #elif defined(__LIBCXX__)
 ::std::__is_primary_template<T>::value
 #elif defined(_MSVC_STL_UPDATE)
