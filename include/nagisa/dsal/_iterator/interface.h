@@ -61,12 +61,12 @@ private:
 	constexpr auto&& derived() const noexcept { return static_cast<Derived const&>(*this); }
 public:
 	constexpr auto operator->() noexcept(noexcept(::std::addressof(*derived())))
-		requires ::std::is_reference_v<::std::iter_reference_t<derived_type>>
+		requires ::std::is_lvalue_reference_v<::std::iter_reference_t<derived_type>>
 	{
 		return ::std::addressof(*derived());
 	}
 	constexpr auto operator->() const noexcept(noexcept(::std::addressof(*derived())))
-		requires ::std::is_reference_v<::std::iter_reference_t<derived_type>>
+		requires ::std::is_lvalue_reference_v<::std::iter_reference_t<derived_type>>
 	{
 		return ::std::addressof(*derived());
 	}
